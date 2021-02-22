@@ -90,20 +90,20 @@ const logUser = function() {
    if (a.length === 0) {
       alert('Пользователь не найден');
    }
-   else {a.forEach(item => {
-      do {
-         passwd =  prompt('Введите Пароль');
-      } while (isNumber(nick) || passwd === '');
-      if ( item.password === passwd) {
-         userName.textContent = `${item.nickName}`;
-      }  else if (passwd === null) {
-         alert('Авторизация прервана');
-      } else if (item.password !== passwd) {
-         alert('Неправильно введен Пароль');
-         logUser();
-      }
-   });
-
+   else { 
+      a.forEach(item => {
+         do {
+            passwd =  prompt('Введите Пароль');
+         } while (isNumber(nick) || passwd === '');
+         if ( item.password === passwd) {
+            userName.textContent = `${item.nickName}`;
+         }  else if (passwd === null) {
+            alert('Авторизация прервана');
+         } else if (item.password !== passwd) {
+            alert('Неправильно введен Пароль');
+            logUser();
+         }
+      });
    } 
 };
 
