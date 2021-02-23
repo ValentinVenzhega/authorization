@@ -2,18 +2,17 @@
 
 const registerUser = document.querySelector('#register-user'), 
    loginUser = document.querySelector('#login-user'),
-   list = document.querySelector('#list'),
-   userName = document.querySelector('#user-name');
-
-let appData = [];
-
-   let isNumber = function(n){
+   listUser = document.querySelector('#list'),
+   userName = document.querySelector('#user-name'),
+   isNumber = function(n){
       return !isNaN(parseFloat(n)) && isFinite(n);
    };
 
+let appData = [];
+
 const render = function() {
-   list.textContent = '';
-   appData.forEach( function(item, i) {
+   listUser.textContent = '';
+   appData.forEach( (item, i) => {
       const li = document.createElement('li');
       li.classList.add('item');
       li.innerHTML = `
@@ -25,10 +24,9 @@ const render = function() {
          </div>
       `;
 
-      list.append(li);
-
+      listUser.append(li);
       const remove = li.querySelector('.remove');
-      remove.addEventListener('click', function() {
+      remove.addEventListener('click', () => {
          appData.splice(i, 1);
          li.remove();
          render();
@@ -42,7 +40,7 @@ if (localStorage.getItem('list')) {
    render();
 }
 const regUser = function() {
-   let   User = {
+   const   User = {
       firstName: '',
       lastName: '',
       nickName: '',
@@ -50,12 +48,12 @@ const regUser = function() {
       regData: '',
    };
    
-   let user;
-   do {user =  prompt('Введите имя и фамилию', 'валентин венжега');
-   } while (user === null || user.trim() === '' || user.replace(/[^\d]+/g, ""));
+   let userName;
+   do {userName =  prompt('Введите имя и фамилию', 'валентин венжега');
+   } while (userName === null || userName.trim() === '' || userName.replace(/[^\d]+/g, ""));
 
-   User.firstName = user.split(' ').splice(0, 1).join('');
-   User.lastName = user.split(' ').splice(1, 1).join('');
+   User.firstName = userName.split(' ').splice(0, 1).join('');
+   User.lastName = userName.split(' ').splice(1, 1).join('');
 
    do {User.nickName =  prompt('Ваш Логин', 'Vel123');
    } while (isNumber(User.nickName) || User.nickName === null || User.nickName.trim() === '');
@@ -64,28 +62,27 @@ const regUser = function() {
    } while (!isNumber(User.password) || User.password === null || User.password === 0);
 
    const date = new Date(),
-   options = {
-      month: 'long',
-      day: 'numeric',
-      timezone: 'UTC'
-   },
-   month = date.toLocaleString("ru", options).split(', ').map(word => word[0].toUpperCase() + word.substring(1)).join(' '), 
-	year = date.getFullYear();
-   User.regData = `${month} ${year} г., ${date.toLocaleTimeString()}`;
+      options = {
+         month: 'long',
+         day: 'numeric',
+         timezone: 'UTC'
+      },
+      month = date.toLocaleString("ru", options).split(', ').map(word => word[0].toUpperCase() + word.substring(1)).join(' '), 
+      year = date.getFullYear();
 
+   User.regData = `${month} ${year} г., ${date.toLocaleTimeString()}`;
    appData.push(User);
    render();
    localStorage.setItem('list', JSON.stringify(appData));
 };
 
 const logUser = function() {
-   let nick,
-      passwd;
-      console.log( passwd);
-   do {nick =  prompt('Ваш Логин');
+   let nickUser,
+      passwordUser;
+   do {nickUser =  prompt('Ваш Логин');
+   } while ( nickUser === '');
 
-   } while ( nick === '');
-   let a = appData.filter(item =>  item.nickName === nick);
+   let a = appData.filter(item =>  item.nickName === nickUser);
 
    if (a.length === 0) {
       alert('Пользователь не найден');
@@ -93,13 +90,14 @@ const logUser = function() {
    else { 
       a.forEach(item => {
          do {
-            passwd =  prompt('Введите Пароль');
-         } while (isNumber(nick) || passwd === '');
-         if ( item.password === passwd) {
+            passwordUser =  prompt('Введите Пароль');
+         } while (isNumber(nickUser) || passwordUser === '');
+         
+         if ( item.password === passwordUser) {
             userName.textContent = `${item.nickName}`;
-         }  else if (passwd === null) {
+         }  else if (passwordUser === null) {
             alert('Авторизация прервана');
-         } else if (item.password !== passwd) {
+         } else if (item.password !== passwordUser) {
             alert('Неправильно введен Пароль');
             logUser();
          }
