@@ -50,16 +50,19 @@ const regUser = function() {
    };
    
    let userName;
-   do {userName = prompt('Введите имя и фамилию', 'валентин венжега');
+   do {
+      userName = prompt('Введите имя и фамилию', 'валентин венжега');
    } while (userName === null || userName.trim() === '' || userName.replace(/[^\d]+/g, ""));
 
    User.firstName = userName.split(' ').splice(0, 1).join('');
    User.lastName = userName.split(' ').splice(1, 1).join('');
 
-   do {User.nickName = prompt('Ваш Логин', 'Vel123');
+   do {
+      User.nickName = prompt('Ваш Логин', 'Vel123');
    } while (isNumber(User.nickName) || User.nickName === null || User.nickName.trim() === '');
 
-   do {User.password = prompt('Введите Пароль', '12345');
+   do {
+      User.password = prompt('Введите Пароль', '12345');
    } while (!isNumber(User.password) || User.password === null || User.password === 0);
 
    const date = new Date(),
@@ -68,7 +71,7 @@ const regUser = function() {
          day: 'numeric',
          timezone: 'UTC'
       },
-      month = date.toLocaleString("ru", options).split(', ').map(word => word[0].toUpperCase() + word.substring(1)).join(' '), 
+      month = date.toLocaleString("ru", options),
       year = date.getFullYear();
 
    User.regData = `${month} ${year} г., ${date.toLocaleTimeString()}`;
@@ -81,15 +84,16 @@ const logUser = function() {
    let nickUser,
       passwordUser;
 
-   do {nickUser = prompt('Ваш Логин');
+   do {
+      nickUser = prompt('Ваш Логин');
    } while ( nickUser === '');
 
-   let a = appData.filter(item => item.nickName === nickUser);
+   let elemUser = appData.filter(item => item.nickName === nickUser);
 
-   if (a.length === 0) {
+   if (elemUser.length === 0) {
       alert('Пользователь не найден');
    }  else { 
-      a.forEach(item => {
+      elemUser.forEach(item => {
          do {
             passwordUser = prompt('Введите Пароль');
          } while (isNumber(nickUser) || passwordUser === '');
