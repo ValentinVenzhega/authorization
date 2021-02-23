@@ -12,7 +12,7 @@ let appData = [];
 
 const render = function() {
    listUser.textContent = '';
-   appData.forEach( (item, i) => {
+   appData.forEach((item, i) => {
       const li = document.createElement('li');
       li.classList.add('item');
       li.innerHTML = `
@@ -39,8 +39,9 @@ if (localStorage.getItem('list')) {
    appData = JSON.parse(localStorage.getItem('list'));
    render();
 }
+
 const regUser = function() {
-   const   User = {
+   const User = {
       firstName: '',
       lastName: '',
       nickName: '',
@@ -49,16 +50,16 @@ const regUser = function() {
    };
    
    let userName;
-   do {userName =  prompt('Введите имя и фамилию', 'валентин венжега');
+   do {userName = prompt('Введите имя и фамилию', 'валентин венжега');
    } while (userName === null || userName.trim() === '' || userName.replace(/[^\d]+/g, ""));
 
    User.firstName = userName.split(' ').splice(0, 1).join('');
    User.lastName = userName.split(' ').splice(1, 1).join('');
 
-   do {User.nickName =  prompt('Ваш Логин', 'Vel123');
+   do {User.nickName = prompt('Ваш Логин', 'Vel123');
    } while (isNumber(User.nickName) || User.nickName === null || User.nickName.trim() === '');
 
-   do {User.password =  prompt('Введите Пароль', '12345');
+   do {User.password = prompt('Введите Пароль', '12345');
    } while (!isNumber(User.password) || User.password === null || User.password === 0);
 
    const date = new Date(),
@@ -79,18 +80,18 @@ const regUser = function() {
 const logUser = function() {
    let nickUser,
       passwordUser;
-   do {nickUser =  prompt('Ваш Логин');
+
+   do {nickUser = prompt('Ваш Логин');
    } while ( nickUser === '');
 
-   let a = appData.filter(item =>  item.nickName === nickUser);
+   let a = appData.filter(item => item.nickName === nickUser);
 
    if (a.length === 0) {
       alert('Пользователь не найден');
-   }
-   else { 
+   }  else { 
       a.forEach(item => {
          do {
-            passwordUser =  prompt('Введите Пароль');
+            passwordUser = prompt('Введите Пароль');
          } while (isNumber(nickUser) || passwordUser === '');
          
          if ( item.password === passwordUser) {
@@ -109,5 +110,3 @@ registerUser.addEventListener('click', regUser);
 loginUser.addEventListener('click',  logUser);
 
 render();
-
-
